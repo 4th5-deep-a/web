@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h3>1. 반복문</h3>
+    {% for food in foods %}
+        <li>{{ food }}</li>
+    {% endfor %}
+
+    <!-- forloop -->
+    {% for food in foods %}
+        <p>{{ forloop.counter }}  {{ food }}</p>
+    {% endfor %}
+
+    <!-- empty list -->
+    {% for user in empty_list %}
+        <p>{{ user }}</p>
+    {% empty %}
+        <p>비어있는 리스트입니다.</p>
+    {% endfor %}
+
+
+    <h3>2. 조건문</h3>
+    {% if '짜장면' in foods %}
+        <p>짜장면에는 고춧가루지!</p>
+    {% endif %}
+
+    <!-- 반복과 조건 -->
+    {% for food in foods %}
+        <p>{{ forloop.counter }}번째 도는 중...</p>
+
+        {% if forloop.first %}
+            <p>짜장면에는 고춧가루지!</p>
+        {% else %}
+            <p>{{ food }}</p>
+        {% endif %}
+    {% endfor %}
+
+    <h3>3. filter 활용</h3>
+    <!-- 1. length -->
+    <!-- variable|filter -->
+    {{ my_sentence|length }}
+
+    {% for message in messages %}
+        {% if message|length > 5 %}
+            <p>메시지가 너무 길어요.</p>
+        {% else %}
+            <p>{{ message }}, {{ message|length }}</p>
+        {% endif %}
+    {% endfor %}
+
+    <!-- 2. lower -->
+    <p>{{ 'ABC'|lower }}</p>
+
+    <!-- 3. title -->
+    <p>{{ my_sentence|title }}</p>
+
+    <!-- 4. random -->
+    <p>{{ foods|random }}</p>
+
+    <!-- 5. truncate(글자수 제한) -->
+    <p>{{ my_sentence|truncatewords:3 }}</p>
+    <p>{{ my_sentence|truncatechars:3 }}</p>
+    <p>{{ my_sentence|truncatechars:10 }}</p>
+
+    <!-- 6. 연산 -->
+    <p>{{ 4|add:6 }}</p>
+
+    <!-- 7. URL -->
+    <a href="https://google.com">Google!</a>
+    {{ 'naver.com'|urlize }}
+
+
+
+    <h3>4. 날짜 표현</h3>
+    <!-- 단순 현재 시각 -->
+    <p>{{ datetimenow }}</p>
+    <p>{% now "DATETIME_FORMAT" %}</p>
+    <p>{% now "SHORT_DATETIME_FORMAT" %}</p>
+    <p>{% now "DATE_FORMAT" %}</p>
+    <p>{% now "SHORT_DATE_FORMAT" %}</p>
+
+    <!-- 포멧 커스텀 -->
+    <p>{% now "Y년 m월 d일 (D) h:i" %}</p>
+
+    <p>{% now "Y" as current_year %}</p>
+    <h4>Copyright {{ current_year }}</h4>
+
+    <!-- date filter -->
+    <p>{{ datetimenow|date:"SHORT_DATETIME_FORMAT" }}</p>
+    
+
+    <h3>5. lorem</h3>
+    <p>{% lorem %}</p>
+    <p>{% lorem 3 w random %}</p>
+    <p>{% lorem 3 p %}</p>
+
+
+</body>
+</html>
