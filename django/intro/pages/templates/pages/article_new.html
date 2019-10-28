@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/article_create/" method="POST">
+        {% csrf_token %}
+        <label for="">제목: </label>
+        <input type="text" name="title">
+
+        <label for="">내용: </label>
+        <textarea name="content" id="" cols="30" rows="10"></textarea>
+
+        <label for="">패스워드: </label>
+        <input type="password" name="pwd">
+
+        <input type="submit">
+    </form>
+</body>
+</html>
