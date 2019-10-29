@@ -1,0 +1,15 @@
+<!-- send.html -->
+<!-- Form Tag를 사용하여, receive로 데이터 보내기 -->
+<!-- title, content -->
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>New Article</h1>
+<form action="/articles/create/" method="GET">
+    <input type="text" name="title">
+    <input type="text" name="content">
+    <input type="submit">
+</form>
+
+{% endblock %}
