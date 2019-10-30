@@ -6,8 +6,16 @@
 {% block body %}
 
 <h1>New Article</h1>
-<form action="/articles/create/" method="GET">
+<!-- GET이 아닌 POST를 써야하는 이유 -->
+<!-- 1. GET의 의미상 맞지 않다. -->
+<!-- 2. 데이터가 URL에 노출되면 안되기 때문에(보안) -->
+<!-- 3. 최소한의 신원 확인 (csrf) -->
+<form action="/articles/create/" method="POST">
+    <!-- 이유 3번 -->
+    {% csrf_token %}
+    <label for="">Title: </label>
     <input type="text" name="title">
+    <label for="">Content: </label>
     <input type="text" name="content">
     <input type="submit">
 </form>

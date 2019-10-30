@@ -4,11 +4,12 @@
 
 <h1>Article Index</h1>
 
+<a href="/articles/new/">New Article</a>
+
 <ul>
     {% for article in articles %}
     <li>
-        <h3>{{ article.title }}</h3>
-        <p>{{ article.content }}</p>
+        <a href="/articles/{{ article.pk }}/">{{ article.title }}</a>
     </li>
     {% endfor %}
 </ul>
