@@ -4,7 +4,9 @@
 
 <h1>New Student</h1>
 
-<form action="/students/create/" method="POST">
+<!-- {# url 'students:create' #} -->
+<!-- action에 값이 없으면, 자기 자신의 주소로 요청을 보냄 -->
+<form action="" method="POST">
     {% csrf_token %}
     <label for="">Name: </label>
     <input type="text" name="name">

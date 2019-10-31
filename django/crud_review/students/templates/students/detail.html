@@ -9,10 +9,14 @@
 <h5>{{ student.created_at }}</h5>
 <h5>{{ student.updated_at }}</h5>
 
-<a href="/students/">List</a>
+<a href="{% url 'students:index' %}">List</a>
 
-<a href="/students/{{ student.pk }}/edit/">Edit</a>
+<a href="{% url 'students:edit' student.pk %}">Edit</a>
 
-<a href="/students/{{ student.pk }}/delete/">Delete</a>
+<!-- a tag는 POST 요청을 보낼 수 없습니다. 그렇다면...? form tag! -->
+<form action="{% url 'students:delete' student.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+</form>
 
 {% endblock %}
