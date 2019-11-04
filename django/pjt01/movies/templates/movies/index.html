@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>Movie Index</h1>
+
+<a href="{% url 'movies:new' %}">새 영화 등록</a>
+
+<ul>
+    {% for movie in movies %}
+    <li>
+        <a href="{% url 'movies:detail' movie.pk %}">{{ movie.title }}</a> - {{ movie.score }}
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

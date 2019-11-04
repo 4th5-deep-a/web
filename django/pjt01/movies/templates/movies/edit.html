@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>Edit Movie</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="">Title: </label>
+        <input type="text" name="title" value="{{ movie.title }}">
+    </div>
+    <div>
+        <label for="">Title En: </label>
+        <input type="text" name="title_en" value="{{ movie.title_en }}">
+    </div>
+    <div>
+        <label for="">Audience: </label>
+        <input type="number" name="audience" value="{{ movie.audience }}">
+    </div>
+    <div>
+        <label for="">Open Date: </label>
+        <input type="date" name="open_date" value="{{ movie.open_date|date:'Y-m-d' }}">
+    </div>
+    <div>
+        <label for="">Genre: </label>
+        <input type="text" name="genre" value="{{ movie.genre }}">
+    </div>
+    <div>
+        <label for="">Watch Grade: </label>
+        <input type="text" name="watch_grade" value="{{ movie.watch_grade }}">
+    </div>
+    <div>
+        <label for="">Score: </label>
+        <input type="number" name="score" step="0.01" min="0" max="10" value="{{ movie.score }}">
+    </div>
+    <div>
+        <label for="">Poster URL: </label>
+        <input type="text" name="poster_url" value="{{ movie.poster_url }}">
+    </div>
+    <div>
+        <label for="">Description: </label>
+        <textarea name="description">{{ movie.description }}</textarea>
+    </div>
+    <div>
+        <input type="submit">
+    </div>
+</form>
+
+{% endblock %}

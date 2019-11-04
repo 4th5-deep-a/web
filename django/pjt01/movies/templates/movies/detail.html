@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>Movie Detail</h1>
+
+<img src="{{ movie.poster_url }}" alt="poster" width="300px">
+
+<ul>
+    <li><b>Title: </b>{{ movie.title }}</li>
+    <li><b>Title En: </b>{{ movie.title_en }}</li>
+    <li><b>Audience: </b>{{ movie.audience }}</li>
+    <li><b>Open Date: </b>{{ movie.open_date }}</li>
+    <li><b>Genre: </b>{{ movie.genre }}</li>
+    <li><b>Watch Grade: </b>{{ movie.watch_grade }}</li>
+    <li><b>Score: </b>{{ movie.score }}</li>
+    <li><b>Description: </b>{{ movie.description }}</li>
+</ul>
+
+<a href="{% url 'movies:index' %}">목록</a>
+<a href="{% url 'movies:edit' movie.pk %}">수정</a>
+<a href="{% url 'movies:delete' movie.pk %}">삭제</a>
+
+{% endblock %}
