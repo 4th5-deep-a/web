@@ -19,4 +19,38 @@
     <input type="submit" value="Delete">
 </form>
 
+<hr>
+
+<!-- 갯수를 표현하는 1번째 방법(DTL) -->
+<!-- <h4>댓글 목록 / 댓글 갯수: {{ comments|length }}</h4> -->
+<!-- 갯수를 표현하는 2번째 방법(ORM) -->
+<h4>댓글 목록 / 댓글 갯수: {{ comments.count }}</h4>
+
+<!-- 1번째 방법. Comment 목록 -> student.comment_set.all (DTL) -->
+<ul>
+    {% for comment in comments %}
+    <li>
+        {{ comment.content }}
+        <a href="{% url 'students:comments_edit' student.pk comment.pk %}">수정</a>
+        <form action="{% url 'students:comments_delete' student.pk comment.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="삭제">
+        </form>
+    </li>
+    {% empty %}
+    <li>
+        작성된 댓글이 없습니다 :(
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- Comment 입력창 -->
+<form action="{% url 'students:comments_new' student.pk %}" method="POST">
+    {% csrf_token %}
+    <label for="">Comment: </label>
+    <textarea name="content" id="" cols="30" rows="5"></textarea>
+    <input type="submit">
+</form>
+
+
 {% endblock %}

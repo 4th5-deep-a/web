@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Student
+from .models import Student, Comment
 
 # Create your views here.
 def index(request):
@@ -49,10 +49,15 @@ def new(request):
 def detail(request, pk):
     # 1. pk에 해당하는 student를 DB에서 가져오기
     student = Student.objects.get(pk=pk) #=> student 인스턴스
+    # 1-1. student의 comment를 다 가져오기 (2번째 방법)
+    comments = student.comment_set.all()
+    # 1-2. comments의 갯수 가져오기
+    # comments.count()
 
     # 2. context에 저장
     context = {
         'student': student,
+        'comments': comments,
     }
 
     # 3. render하면서 context 넘겨주기
@@ -115,3 +120,44 @@ def delete(request, pk):
         return redirect('students:index')
     
     # return 없음! 오류!
+
+# POST 요청을 받음 -> redirect
+def comments_new(request, student_pk):
+    # 1. request에서 데이터 가져오기
+    content = request.POST.get('content')
+
+    # 2. Comment 생성
+    comment = Comment()
+    comment.content = content
+    comment.student_id = student_pk
+    comment.save()
+    
+    # 3. student 상세 페이지로 redirect
+    return redirect('students:detail', student_pk)
+
+# POST 요청을 받음
+def comments_delete(request, student_pk, pk):
+    comment = Comment.objects.get(pk=pk)
+    comment.delete()
+    return redirect('students:detail', student_pk)
+
+
+def comments_edit(request, student_pk, pk):
+    comment = Comment.objects.get(pk=pk)
+    if request.method == 'POST':
+        # POST
+        # 1. POST로 넘어온 데이터 가져오기
+        content = request.POST.get('content')
+
+        # 2. comment에 바꿔 넣기 & 저장
+        comment.content = content
+        comment.save()
+
+        # 3. student 상세 페이지로 redirect
+        return redirect('students:detail', student_pk)
+    else:
+        # GET
+        context = {
+            'comment': comment,
+        }
+        return render(request, 'students/comments_edit.html', context)
