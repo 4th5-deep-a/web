@@ -1,9 +1,26 @@
 from django.db import models
+from imagekit.models import ProcessedImageField
+from imagekit.processors import Thumbnail, ResizeToFill, ResizeToFit
+# Thumbnail(가로, 세로) - 썸네일
+# ResizeToFill(300, 300) - 원본 비율 유지, 해상도를 넘어가는 부분 잘라냄
+# ResizeToFit(300, 300) - 원본 비율 무시, 대신 모든 이미지가 보이도록 압축
 
 # Create your models here.
 class Student(models.Model):
     name = models.CharField(max_length=10)
     age = models.IntegerField()
+    image = ProcessedImageField(
+        blank=True,
+        upload_to='students/images', # 업로드 위치
+        processors=[ResizeToFill(300, 300)], # 처리할 작업들 목록
+        format='jpeg', # 저장 포멧 - jpg, png 등 사용 가능
+        options={
+            'quality': 90, # 옵션
+        },
+    )
+    # image = models.ImageField(blank=True)
+    # blank=True -> 비어 있는 값(ex. '')이 들어올 수 있음.
+    # null=True -> None(NULL)이 들어올 수 있음.
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # 1. DB에 테이블을 생성하기 위한 설계도 생성

@@ -20,9 +20,10 @@ def new(request):
         # 1. POST 요청으로 넘어온 데이터 가져오기
         name = request.POST.get('name')
         age = request.POST.get('age')
+        image = request.FILES.get('image')
 
         # 2. Model 클래스 사용해서 DB에 저장!
-        student = Student(name=name, age=age)
+        student = Student(name=name, age=age, image=image)
         student.save()
 
         # 3. 생성된 학생의 상세 정보를 보는 페이지로 이동(Detail)
@@ -72,10 +73,13 @@ def edit(request, pk):
         # 2. POST 요청을 통해 넘어온 데이터 가져오기
         name = request.POST.get('name')
         age = request.POST.get('age')
+        image = request.FILES.get('image')
 
         # 3. student 인스턴스의 정보를 변경 & DB에 반영 -> .save()
         student.name = name
         student.age = age
+        if image:
+            student.image = image
         student.save()
 
         # 4. student 상세 페이지로 이동(Detail)

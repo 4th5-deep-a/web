@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block body %}
 
 <h1>Student Detail</h1>
 
 <h3>{{ student.name }}</h3>
 <h4>{{ student.age }}</h4>
+{% if student.image %}
+<img src="{{ student.image.url }}" alt="">
+{% else %}
+<img src="{% static 'lisa.png' %}" alt="">
+{% endif %}
 <h5>{{ student.created_at }}</h5>
 <h5>{{ student.updated_at }}</h5>
 

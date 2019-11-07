@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'imagekit', # pip install Pillow pilkit django-imagekit
 ]
 
 MIDDLEWARE = [
@@ -121,4 +122,41 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+# Static File의 URL을 만들 때 사용하는 값
+STATIC_URL = '/static/' # Production 단계에서 사용하는 옵션
+# 'python manage.py collectstatic'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+# 추가적인 Static File 위치 등록
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'crud_review', 'static'),
+]
+
+# 정리
+# - app 단위로 필요한 파일은 app 폴더 안의
+#   'static' 폴더를 만들어 정리
+# - 프로젝트 전체에서 사용할 파일의 경우, settings.py 파일에
+#   'STATICFILES_DIRS' 설정을 통해 위치 등록 후 파일 정리
+# - 모든 이미지 파일은 '{% static %}' 키워드를 통해
+#   Static File의 URL을 만들어 img tag에서 사용
+
+
+# Static vs. Media
+# 1. Static
+# - 웹 서비스에서 사용하기 위하여 미리 준비해놓은 파일
+# - 변경 되지 않는 고정된 파일들
+# - 위치가 고정 -> URL이 고정되어 있음.
+
+# 2. Media
+# - 사용자가 웹 서비스를 사용하면서 업로드한 파일
+# - 사용자가 어떤 파일을 올릴지 모름 -> URL 동적
+
+
+# Media Files
+
+# 1. 파일이 저장될 위치 지정
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 2. 업로드된 파일의 URL을 만들 때 사용할 주소
+MEDIA_URL = '/media/'

@@ -6,12 +6,20 @@
 
 <!-- {# url 'students:create' #} -->
 <!-- action에 값이 없으면, 자기 자신의 주소로 요청을 보냄 -->
-<form action="" method="POST">
+<form action="" method="POST" enctype="multipart/form-data">
+    <!-- 1. application/x-www-from-urlencoded -->
+    <!-- 문자열만 전송(기본값) -->
+    <!-- 2. multipart/form-data -->
+    <!-- 바이너리(파일 및 이미지)도 전송 가능 -->
+    <!-- 3. text/plain -->
+    <!-- 인코딩 하지 않음. -->
     {% csrf_token %}
     <label for="">Name: </label>
     <input type="text" name="name">
     <label for="">Age: </label>
     <input type="number" name="age">
+    <label for="">Image: </label>
+    <input type="file" name="image" accept="image/*">
     <input type="submit">
 </form>
 
