@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>Article Index</h1>
+
+<ul>
+    {% for article in articles %}
+    <li>{{ article.title }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
