@@ -4,9 +4,17 @@
 
 <h1>Article Index</h1>
 
+{% if user.is_authenticated %}
+<a href="{% url 'articles:new' %}">New Article</a>
+{% endif %}
+
 <ul>
     {% for article in articles %}
-    <li>{{ article.title }}</li>
+    <li>
+        <a href="{% url 'articles:detail' article.pk %}">
+            {{ article.title }}
+        </a>
+    </li>
     {% endfor %}
 </ul>
 

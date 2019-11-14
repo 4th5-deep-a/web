@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Article
 from .forms import ArticleForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -33,17 +34,20 @@ def index(request):
 #         }
 #         return render(request, 'articles/new.html', context)
 
-
+@login_required
 def new(request):
     if request.method == 'POST':
         # 데이터베이스에 데이터 생성 (ModelForm)
-        # 1. 넘어온 데이터를 받기
+        # 1. 넘어온 데이터를 받기 (title, content)
         article_form = ArticleForm(request.POST)
 
         # 2. 넘어온 데이터 검증
         if article_form.is_valid():
             # 3. 데이터베이스에 Article 만들기!
-            article = article_form.save()
+            article = article_form.save(commit=False)
+            # 3-1. user 정보 끼워넣기
+            article.user = request.user
+            article.save()
 
             # 4. redirect -> detail
             return redirect('articles:detail', article.pk)
@@ -94,8 +98,13 @@ def detail(request, pk):
 #         }
 #         return render(request, 'articles/new.html', context)
 
+@login_required
 def edit(request, pk):
     article = Article.objects.get(pk=pk)
+    # article의 주인인지 검증
+    if request.user != article.user:
+        return redirect('articles:index')
+
     if request.method == 'POST':
         # Article 수정
         # 1. 넘어온 데이터 받기
