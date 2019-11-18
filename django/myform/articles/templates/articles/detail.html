@@ -11,6 +11,19 @@
 <p>created at: {{ article.created_at }}</p>
 <p>updated at: {{ article.updated_at }}</p>
 
+<p>like: {{ article.like_users.count }}</p>
+
+{% if user.is_authenticated %}
+<form action="{% url 'articles:like' article.pk %}" method="POST">
+    {% csrf_token %}
+    {% if user in article.like_users.all %}
+    <input type="submit" value="좋아요 취소">
+    {% else %}
+    <input type="submit" value="좋아요">
+    {% endif %}
+</form>
+{% endif %}
+
 <div>
     <a href="{% url 'articles:index' %}">List</a>
     {% if user == article.user %}
