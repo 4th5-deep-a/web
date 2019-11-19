@@ -2,6 +2,11 @@
 
 {% block body %}
 
+<form action="{% url 'articles:search' %}" method="GET">
+    <input type="text" name="query">
+    <input type="submit" value="제목으로 검색!">
+</form>
+
 <h1>Article Index</h1>
 
 {% if user.is_authenticated %}
@@ -17,5 +22,28 @@
     </li>
     {% endfor %}
 </ul>
+
+<nav>
+    <ul class="pagination">
+        {% if articles.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="{% url 'articles:index' %}?page={{ articles.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        
+        {% for num_page in articles.paginator.page_range %}
+        <li class="page-item {% if num_page == articles.number %}active{% endif %}">
+            <a class="page-link" href="{% url 'articles:index' %}?page={{ num_page }}">{{ num_page }}</a>
+        </li>
+        {% endfor %}
+
+        {% if articles.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{% url 'articles:index' %}?page={{ articles.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
 
 {% endblock %}

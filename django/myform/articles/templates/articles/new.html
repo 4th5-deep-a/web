@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load bootstrap4 %}
+
 {% block body %}
 
 <h1>Article Form</h1>
@@ -10,8 +12,11 @@
     <input type="text" name="title">
     <label for="">Content: </label>
     <textarea name="content" id="" cols="30" rows="10"></textarea> -->
-    {{ article_form.as_p }}
-    <input type="submit">
+    {% bootstrap_form article_form %}
+    {% buttons submit='작성하기' %}
+        <!-- 추가 버튼 생성 가능 -->
+    {% endbuttons %}
+    <!-- <input type="submit"> -->
 </form>
 
 {% endblock %}

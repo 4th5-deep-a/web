@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>Search Result</h1>
+
+<ul>
+        {% for article in articles %}
+        <li>
+            <a href="{% url 'articles:detail' article.pk %}">
+                {{ article.title }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

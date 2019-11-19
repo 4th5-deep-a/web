@@ -2,10 +2,19 @@ from django.shortcuts import render, redirect
 from .models import Article
 from .forms import ArticleForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 # Create your views here.
 def index(request):
-    articles = Article.objects.all()
+    article_list = Article.objects.all()
+    # Pagination
+    # 1. aritcles를 Paginator에 입력
+    paginator = Paginator(article_list, 3)
+    # 2. 몇번째 page를 보여줄건지 GET으로 가져옴
+    page = request.GET.get('page')
+    # 3. 해당하는 page의 articles만 뽑기
+    articles = paginator.get_page(page)
+
     context = {
         'articles': articles,
     }
@@ -139,3 +148,16 @@ def like(request, pk):
         article.like_users.add(request.user)
 
     return redirect('articles:detail', pk)
+
+# GET 요청을 받음
+def search(request):
+    # 1. request로 부터 검색어 가져오기
+    query = request.GET.get('query') #=> 'asdf'
+    # 2. Article에서 제목에 검색어가 있는지 찾기
+    articles = Article.objects.filter(title__contains=query)
+    # 3. context로 결과값 template에 넘겨주기
+    context = {
+        'articles': articles,
+    }
+
+    return render(request, 'articles/search.html', context)
